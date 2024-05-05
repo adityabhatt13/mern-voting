@@ -19,7 +19,7 @@ exports.userSignupValidator = [
     .withMessage("Must be valid email address"),
 
     check('password')
-    .isLength({ min: 6 })
+    .isLength({ min: 2 })
     // .withMessage("Password must be at least 6 characters long")
     // .matches(/[a-z]/)
     // .withMessage("Missing lowercase letter in password")
@@ -53,6 +53,6 @@ exports.userSigninValidator = [
         .isEmail()
         .withMessage("Must be valid email address"),
     check('password')
-        .isLength({min: 6})
-        .withMessage("Password must be at least 6 characters long"),
+        .isLength({min: 2})
+        .withMessage("Password must be at least 2 characters long"),
 ];

@@ -36,7 +36,7 @@ const Votenow = ({ userData, fetchUserData }) => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
-      const response = await axios.get(`https://voting-app-api-tn00.onrender.com/vote/${selectedCandidate._id}`, {
+      const response = await axios.get(`http://localhost:5000/vote/${selectedCandidate._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ const Votenow = ({ userData, fetchUserData }) => {
 
   const fetchCandidates = async () => {
     try {
-      const response = await axios.get("https://voting-app-api-tn00.onrender.com/candidates");
+      const response = await axios.get("http://localhost:5000/candidates");
       setCandidates(response.data);
       console.log(response.data);
     } catch (err) {

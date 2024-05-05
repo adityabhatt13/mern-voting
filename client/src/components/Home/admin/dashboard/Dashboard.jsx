@@ -39,7 +39,7 @@ const Dashboard = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        "https://voting-app-api-tn00.onrender.com/users"
+        "http://localhost:5000/users"
       );
       const userData = response.data;
       setData({

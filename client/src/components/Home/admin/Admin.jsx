@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
-import adminImg  from "../../images/adminimg.jpg"
-// import adminImg  from "../../images/admin2img.jpg"
-import HomeIcon from '@mui/icons-material/Home';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import "./admin.css"
+import adminImg from "../../images/adminimg.jpg";
+import HomeIcon from "@mui/icons-material/Home";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import "./admin.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,7 +17,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Candidate from "./candidate/Candidate";
 import Voter from "./Voter";
-
 import Bus from "./Bus";
 import Listitems from "./Listitems";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -27,20 +25,10 @@ import Title from "../body/Title";
 
 const drawerWidth = 200;
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window?: () => Window;
-}
-
-export default function Admin(props: Props) {
-  const { window } = props;
+function Admin(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuData, setMenudata] = useState("dashboard");
   const [isClosing, setIsClosing] = useState(false);
-  // const [token, setToken] = useState(localStorage.getItem("token"));
 
   const isAdminLoggedIn = () => {
     return (
@@ -52,7 +40,6 @@ export default function Admin(props: Props) {
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAdminLoggedIn()) {
-      // Redirect to login page if not logged in as admin
       return navigate("/");
     }
   });
@@ -74,56 +61,58 @@ export default function Admin(props: Props) {
 
   const drawer = (
     <div>
-      <Toolbar title="Go-to-Home"  className="admin_dashboard_text" > <NavLink to={'/'}> <HomeIcon sx={{ fontSize: 50 }}/> </NavLink></Toolbar>
+      <Toolbar title="Go-to-Home" className="admin_dashboard_text">
+        {" "}
+        <NavLink to={"/"}>
+          {" "}
+          <HomeIcon sx={{ fontSize: 50 }} />{" "}
+        </NavLink>{" "}
+      </Toolbar>
       <Divider />
       <List>
-      <Tooltip title="Jai Shree Ram " placement="right" arrow >
-         <div className="drawer_img_container">
-         <img src={adminImg} alt="" />
-         </div>
-         </Tooltip>
+        <Tooltip title="Jai Shree Ram " placement="right" arrow>
+          <div className="drawer_img_container">
+            <img src={adminImg} alt="" />
+          </div>
+        </Tooltip>
       </List>
       <List>
         <Listitems
           selected={menuData === "dashboard"}
           onClick={() => setMenudata("dashboard")}
           text={"DashBoard"}
-          icons={<DashboardIcon/>}
+          icons={<DashboardIcon />}
         />
         <Listitems
           selected={menuData === "candidate"}
           onClick={() => setMenudata("candidate")}
           text={"Candidate"}
-          icons={<PersonAddIcon/>}
-
+          icons={<PersonAddIcon />}
         />
         <Listitems
           selected={menuData === "voter"}
           onClick={() => setMenudata("voter")}
           text={"Voter"}
-          icons={<DashboardIcon/>}
-
+          icons={<DashboardIcon />}
         />
         <Listitems
           selected={menuData === "bus"}
           onClick={() => setMenudata("bus")}
           text={"Bus"}
-          icons={<DashboardIcon/>}
-
+          icons={<DashboardIcon />}
         />
       </List>
       <Divider />
     </div>
   );
 
-  // Remove this const when copying and pasting into your project.
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    props.window !== undefined ? () => props.window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
-    <Title title={"Admin Dashboard"} />
-    
+      <Title title={"Admin Dashboard"} />
+
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -145,17 +134,15 @@ export default function Admin(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-           Admin Panel
+            Admin Panel
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
-        
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, }}
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
@@ -163,7 +150,7 @@ export default function Admin(props: Props) {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -171,7 +158,6 @@ export default function Admin(props: Props) {
               boxSizing: "border-box",
               width: drawerWidth,
             },
-            
           }}
         >
           {drawer}
@@ -194,13 +180,11 @@ export default function Admin(props: Props) {
         component="main"
         sx={{
           flexGrow: 1,
-          // p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
         <Toolbar />
-        {/* contnet */}
-        {menuData === "dashboard" && <Dashboard/>}
+        {menuData === "dashboard" && <Dashboard />}
         {menuData === "candidate" && <Candidate />}
         {menuData === "voter" && <Voter />}
         {menuData === "bus" && <Bus />}
@@ -208,3 +192,5 @@ export default function Admin(props: Props) {
     </Box>
   );
 }
+
+export default Admin;

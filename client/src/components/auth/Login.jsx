@@ -35,7 +35,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true); // Set loading state to true while processing
     try {
-      const response = await axios.post("https://voting-app-api-tn00.onrender.com/login", formData);
+      const response = await axios.post("http://localhost:5000/login", formData);
       console.log("Server Response:", response.data.message);
       const { role ,fname , _id} = response.data.user;
       // Inside handleSubmit function after successful login
