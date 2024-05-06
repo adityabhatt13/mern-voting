@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import electionsymbol from "../../images/election-symbol.png";
@@ -69,23 +69,28 @@ const Voter = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-        // Save image to local storage
-        localStorage.setItem(`uploadedImage${userid}`, reader.result);
-      };
-      reader.readAsDataURL(file);
+      // Check if file size is less than or equal to 5MB (5 * 1024 * 1024 bytes)
+      if (file.size <= 1 * 1024 * 1024) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setSelectedImage(reader.result);
+          // Save image to local storage
+          localStorage.setItem(`uploadedImage${userid}`, reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert("File size exceeds the limit of 1 MB");
+      }
     } else {
       setSelectedImage(null);
     }
   };
 
-  const handleClearImage = () => {
-    setSelectedImage(null);
-    // Remove image from local storage
-    localStorage.removeItem(`uploadedImage${userid}`);
-  };
+  // const handleClearImage = () => {
+  //   setSelectedImage(null);
+  //   // Remove image from local storage
+  //   localStorage.removeItem(`uploadedImage${userid}`);
+  // };
 
   const handleButtonClick = () => {
     document.getElementById("upload-input").click(); // Trigger click event on input field
@@ -217,13 +222,13 @@ const Voter = () => {
                     style={{ display: "none" }}
                     onChange={handleImageChange}
                   />
-                  <IconButton
+                  {/* <IconButton
                     aria-label="Delete"
                     sx={{ backgroundColor: "white" }}
                     onClick={handleClearImage}
                   >
                     <DeleteIcon sx={{ fontSize: 15, color: "red" }} />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
                 <div>
                   <p>

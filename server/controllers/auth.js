@@ -39,7 +39,15 @@ const signupUser = async (req, res) => {
     if (req.files && req.files.file) {
       // If file was uploaded, upload it to Cloudinary
       const photo = req.files.file;
-      cloudinary.uploader.upload(photo.tempFilePath, async (err, result) => {
+      // Define compression options for Cloudinary upload
+      const uploadOptions = {
+        width: MAX_WIDTH, // Optional: Set a maximum width for resizing
+        height: MAX_HEIGHT, // Optional: Set a maximum height for resizing
+        eager: [
+          { width: 200, height: 200, crop: "fill" }, // Create a compressed thumbnail
+        ],
+      };
+      cloudinary.uploader.upload(photo.tempFilePath, uploadOptions, async (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ error: "Error uploading image" });
